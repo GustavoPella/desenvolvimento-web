@@ -25,13 +25,11 @@ button.addEventListener("click", () => {
   input.value = "";
 });
 
-// Delegação de eventos para remover ou marcar
 list.addEventListener("click", (event) => {
   const li = event.target.closest("li");
 
   if (!li) return;
 
-  // Se clicou no checkbox → marcar como concluída
   if (event.target.tagName === "INPUT") {
     li.classList.toggle("completed");
   } else {
