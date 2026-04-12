@@ -65,6 +65,19 @@ li:hover {
   background-color: #4e6a6e;
 }
 
+li span {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+input[type="checkbox"] {
+  transform: scale(0.8);
+  cursor: pointer;
+}
+
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
