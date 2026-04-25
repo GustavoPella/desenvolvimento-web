@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(to bottom, #1e2a2f, #0f171a);
+  font-family: "Trebuchet MS", sans-serif;
+  color: #e6d3a3;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.container {
+  background-color: #2d3e40;
+  padding: 20px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 0 15px #000;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+}
+
+.input-area button {
+  background-color: #6b8e23;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background-color: #556b2f;
+}
+
+ul {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  background-color: #3c4f52;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+li:hover {
+  background-color: #4e6a6e;
+}
+
+li span {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-remover {
+  background-color: #8b2020;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8em;
+  flex-shrink: 0;
+}
+
+.btn-remover:hover {
+  background-color: #a32929;
+}
