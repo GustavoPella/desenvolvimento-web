@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 
-const env = typeof process !== "undefined" ? process.env : {};
-const ALLOWED_ORIGIN = env.ALLOWED_ORIGIN ?? "";
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN ?? "";
 
 const corsHeaders = (origin) => ({
   "Access-Control-Allow-Origin": ALLOWED_ORIGIN || origin,
