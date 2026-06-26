@@ -59,7 +59,7 @@ export default function Footer() {
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 24, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <p style={{ ...sans, fontSize: 12.5, color: "rgba(240,240,232,0.25)" }}>
-            © 2025 Retrospect · Todos os direitos reservados
+            © 2026 Retrospect · Todos os direitos reservados
           </p>
           <p style={{ ...sans, fontSize: 12.5, color: "rgba(240,240,232,0.25)" }}>
             Desenvolvido por{" "}
