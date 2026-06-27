@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Hero from "./components/Hero";
 import Carousel from "./components/Carousel";
+import Trilhas from "./components/Trilhas";
 import Features from "./components/Features";
 import Challenges from "./components/Challenges";
 import Vip from "./components/Vip";
@@ -56,6 +57,7 @@ export default function App() {
       <Hero onScrollTo={scrollToSection} />
 
       <Carousel />
+      <Trilhas />
       <Features />
       <Challenges />
       <Vip />
