@@ -2,6 +2,7 @@ export const NAV_LINKS = [
   { label: "Início", id: "inicio" },
   { label: "Funcionalidades", id: "funcionalidades" },
   { label: "Trilhas", id: "trilhas" },
+  { label: "Minhas Trilhas", id: "minhas-trilhas" },
   { label: "Desafios", id: "desafios" },
   { label: "VIP", id: "vip" },
   { label: "Contato", id: "contato" },

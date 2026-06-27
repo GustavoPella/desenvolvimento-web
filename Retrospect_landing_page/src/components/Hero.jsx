@@ -25,8 +25,8 @@ export default function Hero({ onScrollTo }) {
         fontWeight: 900, lineHeight: 1.06, letterSpacing: "-0.03em",
         maxWidth: 840, marginBottom: 22, ...txt,
       }}>
-        A natureza na palma<br />
-        <span style={{ color: "#5dca9f" }}>da sua mão</span>
+        Retro
+        <span style={{ color: "#5dca9f" }}>spect</span>
       </h1>
 
       <p className="anim-hero anim-hero-3" style={{
