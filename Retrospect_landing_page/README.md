@@ -1,18 +1,89 @@
-# React + Vite
+# Retrospect
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicativo de ecoturismo consciente. Permite identificar espécies com a
+câmera, explorar trilhas, completar desafios ecológicos, acompanhar um
+plano VIP e entrar em contato com a equipe — tudo pensado para conectar
+pessoas e natureza de forma responsável.
 
-Currently, two official plugins are available:
+## Integrante
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Gustavo Pellá Bazanella
 
-## React Compiler
+## Descrição do sistema
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+O Retrospect é uma landing page interativa que apresenta as funcionalidades
+do app de ecoturismo Retrospect. Além das seções de apresentação (hero,
+galeria, funcionalidades, desafios e plano VIP), o projeto implementa um
+fluxo funcional completo de **CRUD de Trilhas**, permitindo que o usuário
+cadastre, consulte, edite e exclua trilhas que já percorreu ou planeja
+explorar, e um **formulário de contato** que envia e-mail de verdade através
+de uma function serverless.
 
-Note: This will impact Vite dev & build performances.
+## Tecnologias utilizadas
 
-## Expanding the ESLint configuration
+- React + Vite
+- JavaScript (JSX)
+- Netlify (hospedagem e deploy contínuo via Git)
+- Netlify Functions (endpoint serverless para envio de e-mail)
+- Nodemailer (envio de e-mail via SMTP)
+- localStorage (persistência do CRUD de Trilhas no navegador)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Funcionalidades implementadas
+
+- **Hero**: apresentação inicial do app com estatísticas e chamadas para ação.
+- **Galeria de trilhas**: carrossel com destaques de exploração, identificação,
+  comunidade e gamificação.
+- **Minhas Trilhas (CRUD completo)**:
+  - Cadastro de trilha (nome, localização, dificuldade e descrição).
+  - Consulta/listagem das trilhas cadastradas.
+  - Edição de uma trilha existente.
+  - Exclusão de trilha, com confirmação.
+  - Persistência local: os dados continuam disponíveis após recarregar a página.
+- **Funcionalidades do app**: escaneamento por câmera, mapa interativo, rede
+  social, desafios ambientais, modo seguro e acessibilidade.
+- **Desafios ecológicos**: cartões com pontuação e nível de dificuldade.
+- **Plano VIP**: comparação entre plano mensal e anual.
+- **Contato**: formulário (nome, e-mail, mensagem) que envia e-mail real via
+  Netlify Function, com validação no frontend e no backend da function.
+
+## Instruções para execução
+
+### Pré-requisitos
+
+- Node.js instalado
+- Conta no Netlify (para testar o envio de e-mail localmente)
+
+### Passos
+
+```bash
+npm install
+npm install --save-dev netlify-cli
+```
+
+Crie um arquivo `.env` na raiz do projeto com:
+
+```dotenv
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=seu-email@gmail.com
+SMTP_PASS=sua-senha-de-app
+CONTACT_EMAIL=email-que-recebe@gmail.com
+ALLOWED_ORIGIN=
+```
+
+Em seguida, execute:
+
+```bash
+npx netlify dev
+```
+
+Acesse `http://localhost:8888` no navegador. A aplicação completa, incluindo
+o formulário de contato funcional, estará disponível nesse endereço.
+
+> Caso queira apenas visualizar a interface sem testar o envio de e-mail,
+> também é possível rodar `npm run dev` e acessar `http://localhost:5173`.
+
+## Link do vídeo de demonstração
+
+[Inserir link aqui]

@@ -24,7 +24,7 @@ h1 {
   gap: 10px;
 }
 
-input {
+input, select {
   flex: 1;
   padding: 8px;
   border-radius: 5px;

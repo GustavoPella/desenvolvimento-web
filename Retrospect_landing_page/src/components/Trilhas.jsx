@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SectionTag, SectionHeading, SectionLead } from "../data/UI";
 import { sans, txt, muted } from "../styles/global";
 
-const STORAGE_KEY = "retrospect:trilhas";
+const API = "http://localhost:8080/api/trilhas";
 
 const initialFormState = {
     nome: "",
@@ -17,30 +17,26 @@ const dificuldadeColor = {
     "Difícil": "#c01a3a",
 };
 
-function loadTrilhas() {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) : [];
-    } catch {
-        return [];
-    }
-}
-
 export default function Trilhas() {
     const [trilhas, setTrilhas] = useState([]);
     const [form, setForm] = useState(initialFormState);
     const [editingId, setEditingId] = useState(null);
-    const [loaded, setLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [erro, setErro] = useState("");
+
+    async function fetchTrilhas() {
+        try {
+            const res = await fetch(API);
+            const data = await res.json();
+            setTrilhas(data);
+        } catch {
+            setErro("Não foi possível conectar ao servidor. Verifique se o backend está rodando.");
+        }
+    }
 
     useEffect(() => {
-        setTrilhas(loadTrilhas());
-        setLoaded(true);
+        fetchTrilhas();
     }, []);
-
-    useEffect(() => {
-        if (!loaded) return;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(trilhas));
-    }, [trilhas, loaded]);
 
     const handleChange = (field) => (event) => {
         setForm((prev) => ({ ...prev, [field]: event.target.value }));
@@ -49,26 +45,38 @@ export default function Trilhas() {
     const resetForm = () => {
         setForm(initialFormState);
         setEditingId(null);
+        setErro("");
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!form.nome.trim() || !form.localizacao.trim()) return;
 
-        if (!form.nome.trim() || !form.localizacao.trim()) {
-            return;
+        setLoading(true);
+        setErro("");
+
+        try {
+            if (editingId) {
+                await fetch(`${API}/${editingId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(form),
+                });
+            } else {
+                await fetch(API, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(form),
+                });
+            }
+
+            await fetchTrilhas();
+            resetForm();
+        } catch {
+            setErro("Erro ao salvar. Verifique se o backend está rodando.");
+        } finally {
+            setLoading(false);
         }
-
-        if (editingId) {
-            setTrilhas((prev) =>
-                prev.map((trilha) =>
-                    trilha.id === editingId ? { ...trilha, ...form } : trilha
-                )
-            );
-        } else {
-            setTrilhas((prev) => [...prev, { id: crypto.randomUUID(), ...form }]);
-        }
-
-        resetForm();
     };
 
     const handleEdit = (trilha) => {
@@ -81,14 +89,16 @@ export default function Trilhas() {
         });
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         const confirmed = window.confirm("Excluir esta trilha?");
         if (!confirmed) return;
 
-        setTrilhas((prev) => prev.filter((trilha) => trilha.id !== id));
-
-        if (editingId === id) {
-            resetForm();
+        try {
+            await fetch(`${API}/${id}`, { method: "DELETE" });
+            await fetchTrilhas();
+            if (editingId === id) resetForm();
+        } catch {
+            setErro("Erro ao excluir. Verifique se o backend está rodando.");
         }
     };
 
@@ -124,6 +134,7 @@ export default function Trilhas() {
                         placeholder="Nome da trilha"
                         value={form.nome}
                         onChange={handleChange("nome")}
+                        disabled={loading}
                         required
                     />
                     <input
@@ -131,9 +142,14 @@ export default function Trilhas() {
                         placeholder="Localização"
                         value={form.localizacao}
                         onChange={handleChange("localizacao")}
+                        disabled={loading}
                         required
                     />
-                    <select value={form.dificuldade} onChange={handleChange("dificuldade")}>
+                    <select
+                        value={form.dificuldade}
+                        onChange={handleChange("dificuldade")}
+                        disabled={loading}
+                    >
                         <option value="Fácil">Fácil</option>
                         <option value="Médio">Médio</option>
                         <option value="Difícil">Difícil</option>
@@ -143,18 +159,24 @@ export default function Trilhas() {
                         rows={2}
                         value={form.descricao}
                         onChange={handleChange("descricao")}
+                        disabled={loading}
                         style={{ gridColumn: "1 / -1" }}
                     />
-                    <div
-                        style={{
-                            gridColumn: "1 / -1",
-                            display: "flex",
-                            gap: 10,
-                            justifyContent: "center",
-                        }}
-                    >
-                        <button type="submit" className="btn-primary" style={{ padding: "12px 32px" }}>
-                            {editingId ? "Salvar alterações" : "Cadastrar trilha"}
+
+                    {erro && (
+                        <p style={{ ...sans, fontSize: 13, color: "#e0593a", gridColumn: "1 / -1", textAlign: "center" }}>
+                            {erro}
+                        </p>
+                    )}
+
+                    <div style={{ gridColumn: "1 / -1", display: "flex", gap: 10, justifyContent: "center" }}>
+                        <button
+                            type="submit"
+                            className="btn-primary"
+                            disabled={loading}
+                            style={{ padding: "12px 32px", opacity: loading ? 0.7 : 1 }}
+                        >
+                            {loading ? "Salvando..." : editingId ? "Salvar alterações" : "Cadastrar trilha"}
                         </button>
                         {editingId && (
                             <button
