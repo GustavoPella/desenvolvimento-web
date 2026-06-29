@@ -50,7 +50,7 @@ export const GLOBAL_CSS = `
     font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
   }
 
-  input, textarea {
+  input, textarea, select {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     color: #f0f0e8; padding: 14px 18px; border-radius: 10px;
@@ -59,8 +59,20 @@ export const GLOBAL_CSS = `
     resize: vertical;
   }
   input::placeholder, textarea::placeholder { color: rgba(240,240,232,0.3); }
-  input:focus, textarea:focus { border-color: rgba(93,202,159,0.6); }
+  input:focus, textarea:focus, select:focus { border-color: rgba(93,202,159,0.6); }
+select option {
+    background: #111;
+    color: #f0f0e8;
+}
 
+select option:checked {
+    background: #2e7d4f;
+    color: white;
+}
+
+select option:hover {
+    background: #3da068;
+}
   .footer-link {
     font-size: 13.5px; color: rgba(240,240,232,0.38);
     cursor: pointer; transition: color 0.2s; margin-bottom: 10px; display: block;
